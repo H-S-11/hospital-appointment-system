@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Profile</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #ffffff;
+      --background: #4B3C8A;
+      --text-light: #ffffff;
+    }
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background);
+      color: var(--text-light);
+    }
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+    nav {
+      width: 100%;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.2);
+      color: white;
+    }
+    nav h2 {
+      font-weight: 600;
+    }
+    nav .nav-links a {
+      margin-left: 1.5rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    nav .nav-links a:hover {
+      color: var(--primary);
+    }
+    .profile-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    .profile-card {
+      background: rgba(255,255,255,0.15);
+      padding: 2rem;
+      border-radius: 1.25rem;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.3);
+      backdrop-filter: blur(12px);
+    }
+    .profile-card h2 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .profile-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+    }
+    .label {
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .value {
+      opacity: 0.9;
+    }
+    .change-password {
+      display: block;
+      margin-top: 1.5rem;
+      text-align: center;
+      color: var(--primary);
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .change-password:hover {
+      color: white;
+    }
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .nav-links {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .profile-card {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <h2>Profile</h2>
+    <div class="nav-links">
+      <a href="patient_dashboard.html">Dashboard</a>
+      <a href="profile.html">Profile</a>
+      <a href="login.html" id="logout">Logout</a>
+    </div>
+  </nav>
+
+  <div class="profile-container">
+    <div class="profile-card">
+      <h2>User Details</h2>
+      <div class="profile-item"><span class="label">First Name:</span> <span class="value" id="firstName">Loading...</span></div>
+      <div class="profile-item"><span class="label">Last Name:</span> <span class="value" id="lastName">Loading...</span></div>
+      <div class="profile-item"><span class="label">Address:</span> <span class="value" id="address">Loading...</span></div>
+      <div class="profile-item"><span class="label">Mobile:</span> <span class="value" id="mobile">Loading...</span></div>
+      <div class="profile-item"><span class="label">Email:</span> <span class="value" id="email">Loading...</span></div>
+      <div class="profile-item"><span class="label">Username:</span> <span class="value" id="username">Loading...</span></div>
+      <a href="change-password.html" class="change-password">Change Password</a>
+    </div>
+  </div>
+
+  <script>
+    // Get and sanitize email from localStorage
+    const emailRaw = localStorage.getItem('email');
+    const email = emailRaw ? emailRaw.trim().toLowerCase() : null;
+    console.log('Fetching profile for email:', `"${email}"`);
+
+    if (!email) {
+      alert('Please log in first.');
+      window.location.href = 'login.html';
+    } else {
+      fetch(`http://localhost:3000/user?email=${encodeURIComponent(email)}`)
+        .then(async res => {
+          console.log('Fetch response status:', res.status);
+          if (!res.ok) {
+            let errorMsg = 'Unknown error';
+            try {
+              const errJson = await res.json();
+              if (errJson.message) errorMsg = errJson.message;
+            } catch {}
+            throw new Error(`Failed to load profile: ${errorMsg} (status ${res.status})`);
+          }
+          return res.json();
+        })
+        .then(user => {
+          console.log("User data fetched:", user);
+          if (!user.first_name) {
+            throw new Error('User data is incomplete or empty');
+          }
+          document.getElementById('firstName').textContent = user.first_name;
+          document.getElementById('lastName').textContent = user.last_name;
+          document.getElementById('address').textContent = user.address;
+          document.getElementById('mobile').textContent = user.mobile;
+          document.getElementById('email').textContent = user.email;
+          document.getElementById('username').textContent = user.username;
+        })
+        .catch(err => {
+          alert(err.message);
+          console.error('Profile fetch error:', err);
+          window.location.href = 'login.html';
+        });
+    }
+
+    // Logout handler
+    document.getElementById('logout').addEventListener('click', (e) => {
+      e.preventDefault();
+      localStorage.removeItem('email');
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>

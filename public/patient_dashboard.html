@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #A78BFA;
+      --background: #4B3C8A;
+      --text-light: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background);
+      color: var(--text-light);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      width: 100%;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.2);
+      color: white;
+    }
+
+    nav .nav-links a {
+      margin-left: 1.5rem;
+      text-decoration: none;
+      color: white;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .dashboard {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      padding: 2rem;
+      gap: 2rem;
+    }
+
+    .button-section {
+      flex: 1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .button-section button {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border: 2px solid white;
+      border-radius: 1rem;
+      backdrop-filter: blur(10px);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+      margin-left: 10%;
+    }
+
+    .button-section button:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: scale(1.05);
+    }
+
+    .image-section {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    .image-section img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    @media (max-width: 768px) {
+      .dashboard {
+        flex-direction: column;
+        text-align: center;
+        align-items: center;
+      }
+
+      .button-section {
+        justify-content: center;
+      }
+
+      .image-section {
+        justify-content: center;
+      }
+
+      .button-section button {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <h2>Welcome, <span id="patientName">Loading...</span></h2>
+    <div class="nav-links">
+      <a href="#">Appointments</a>
+      <a href="#">Medical History</a>
+      <a href="profile.html">Profile</a>
+    </div>
+  </nav>
+
+  <div class="dashboard">
+    <div class="button-section">
+      <button onclick="window.location.href='book-appointment.html'">Book an Appointment</button>
+    </div>
+    <div class="image-section">
+      <img src="pdashboard.jpeg" alt="Dashboard Illustration">
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const email = localStorage.getItem("email");
+      console.log(email);
+      if (!email) {
+        alert("Please log in first.");
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        const res = await fetch(`http://localhost:3000/user?email=${encodeURIComponent(email)}`);
+        const user = await res.json();
+
+        if (res.ok) {
+          document.getElementById("patientName").textContent = user.first_name;
+        } else {
+          document.getElementById("patientName").textContent = "Unknown";
+        }
+      } catch (err) {
+        console.error(err);
+        document.getElementById("patientName").textContent = "Error";
+      }
+    });
+  </script>
+
+</body>
+</html>

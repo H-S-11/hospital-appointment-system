@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Doctor Dashboard</title>
+  <link rel="stylesheet" href="doctor.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/index.global.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/index.global.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>👨‍⚕️ Doctor Dashboard</h1>
+  </header>
+
+  <section class="main-dashboard">
+    <!-- Queued Appointments -->
+    <div class="queued-appointments">
+      <h2>🕒 Queued Appointments</h2>
+
+      <div class="appointment-card">
+        <p><strong>Patient:</strong> John Doe</p>
+        <p><strong>Requested Time:</strong> 2025-08-07, 10:00 AM</p>
+        <p><strong>Status:</strong> Pending</p>
+        <div class="actions">
+          <button class="approve-btn">Approve</button>
+          <button class="reschedule-btn" onclick="openCalendar()">Reschedule</button>
+          <button class="reject-btn">Reject</button>
+          <button class="history-btn" onclick="openHistory('John Doe')">View History</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FullCalendar Integration -->
+    <div class="calendar-section">
+      <h2>🗓️ Monthly Schedule Calendar</h2>
+      <div id="calendar"></div>
+    </div>
+  </section>
+
+  <!-- Modals -->
+  <div id="calendar-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeCalendar()">&times;</span>
+      <h3>Pick a new time</h3>
+      <input type="datetime-local" />
+      <button class="confirm-btn">Send Reschedule Request</button>
+    </div>
+  </div>
+
+  <div id="history-modal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeHistory()">&times;</span>
+      <h3>Medical History - <span id="patient-name"></span></h3>
+      
+
+      <div class="history-content">
+  <ul id="history-list">
+    <li>12 Jan 2024 – Flu, prescribed Tamiflu</li>
+    <li>25 Mar 2024 – Diabetes checkup</li>
+    <li>16 Jul 2025 – Routine BP monitoring</li>
+  </ul>
+
+  <div class="add-history-note">
+    <h4>Add Note:</h4>
+    <textarea id="new-history-note" placeholder="Enter new medical complaint or note..."></textarea>
+    <button onclick="addHistoryNote()">Add Note</button>
+  </div>
+</div>
+
+    </div>
+  </div>
+<!-- Add Note Modal -->
+<div id="calendarModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h3>Add Medical Complaint</h3>
+    <label>Patient Name:</label>
+    <input type="text" id="patientName" placeholder="Enter patient's name">
+
+    <label>Medical Complaint / Note:</label>
+    <textarea id="noteContent" placeholder="Enter medical complaint or note..."></textarea>
+
+    <label>Time (optional):</label>
+    <input type="time" id="noteTime">
+
+    <button onclick="addNote()">Add to Calendar</button>
+  </div>
+</div>
+
+  <!-- JavaScript -->
+  <script>
+    function openCalendar() {
+      document.getElementById("calendar-modal").style.display = "block";
+    }
+
+    function closeCalendar() {
+      document.getElementById("calendar-modal").style.display = "none";
+    }
+
+    function openHistory(name) {
+      document.getElementById("patient-name").innerText = name;
+      document.getElementById("history-modal").style.display = "block";
+    }
+
+    function closeHistory() {
+      document.getElementById("history-modal").style.display = "none";
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      var calendarEl = document.getElementById('calendar');
+      var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        selectable: true,
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        dateClick: function (info) {
+          const note = prompt("Add a note for " + info.dateStr);
+          if (note) {
+            calendar.addEvent({
+              title: note,
+              start: info.dateStr,
+              allDay: true
+            });
+          }
+        },
+        events: []
+      });
+      calendar.render();
+    });
+
+    
+  let selectedDate;
+  const calendarModal = document.getElementById("calendarModal");
+
+  function openModal(dateStr) {
+    selectedDate = dateStr;
+    calendarModal.style.display = "block";
+  }
+
+  function closeModal() {
+    calendarModal.style.display = "none";
+    document.getElementById("patientName").value = '';
+    document.getElementById("noteContent").value = '';
+    document.getElementById("noteTime").value = '';
+  }
+
+  function addNote() {
+    const patient = document.getElementById("patientName").value.trim();
+    const note = document.getElementById("noteContent").value.trim();
+    const time = document.getElementById("noteTime").value;
+
+    if (!patient || !note) {
+      alert("Please fill in both patient name and complaint.");
+      return;
+    }
+
+    const title = `${patient}: ${note}`;
+    const startTime = time ? `${selectedDate}T${time}` : selectedDate;
+
+    calendar.addEvent({
+      title: title,
+      start: startTime,
+      allDay: !time
+    });
+
+    closeModal();
+  }
+
+  // Initialize FullCalendar
+  const calendarEl = document.getElementById('calendar');
+  const calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth',
+    selectable: true,
+    dateClick: function(info) {
+      openModal(info.dateStr);
+    },
+    events: []
+  });
+  calendar.render();
+
+  // Close modal if clicking outside
+  window.onclick = function(event) {
+    if (event.target == calendarModal) {
+      closeModal();
+    }
+  }
+
+
+
+  function addHistoryNote() {
+  const noteContent = document.getElementById("new-history-note").value.trim();
+  if (!noteContent) {
+    alert("Please enter a note before adding.");
+    return;
+  }
+
+  const historyList = document.getElementById("history-list");
+  const date = new Date().toLocaleDateString('en-GB'); // Format: DD/MM/YYYY
+  const li = document.createElement("li");
+  li.textContent = `${date} – ${noteContent}`;
+  historyList.appendChild(li);
+
+  document.getElementById("new-history-note").value = '';
+}
+
+
+  </script>
+</body>
+</html>

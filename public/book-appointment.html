@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book Appointment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #A78BFA;
+      --background: #4B3C8A;
+      --text-light: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--background);
+      color: var(--text-light);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+
+   .glass-box {
+  display: flex;
+  flex-direction: row;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+  width: 90%;             /* reduced from 100% */
+  max-width: 1000px;       /* reduced from 960px */
+  max-height: 85vh;       /* ✅ keeps it smaller vertically */
+  overflow: hidden;       /* prevent outer overflow */
+}
+
+.form-section {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;       /* ✅ lets you scroll if it’s too tall */
+}
+
+
+    .form-section h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      margin-top: 0.3rem;
+      font-size: 1rem;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      background-color: #4B3C8A;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 0.75rem;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      appearance: none;
+      cursor: pointer;
+      transition: background 0.3s, border 0.3s;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 130px;
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    select option {
+      background-color: #4B3C8A;
+      color: #ffffff;
+    }
+
+    button {
+      width: 100%;
+      padding: 1rem;
+      background-color: var(--primary);
+      border: none;
+      color: white;
+      font-weight: bold;
+      font-size: 1rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 1rem;
+    }
+
+    button:hover {
+      background-color: #8b6efb;
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1rem;
+      color: var(--text-light);
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .image-section {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .image-section img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .glass-box {
+        flex-direction: column;
+      }
+
+      .image-section {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glass-box">
+    <!-- Form Section -->
+    <div class="form-section">
+      <h2>Book an Appointment</h2>
+      <form>
+        <div class="form-group">
+          <label for="specialty">Select Specialty</label>
+          <select id="specialty" required>
+            <option value="">Choose one</option>
+            <option value="cardiology">Cardiology</option>
+            <option value="neurology">Neurology</option>
+            <option value="dermatology">Dermatology</option>
+            <option value="general">General Medicine</option>
+            <option value="ob-gyn">Obstetrics and Gynecology (OB/GYN)</option>
+            <option value="pediatrics">Pediatrics</option>
+            <option value="ophthalmology">Ophthalmology</option>
+            <option value="radiology">Radiology</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="doctor">Select Doctor</label>
+          <select id="doctor" required>
+            <option value="">Select doctor</option>
+            <!-- Sample doctors by specialty -->
+            <option value="dr-prakash">Dr. Prakash – Cardiology</option>
+            <option value="dr-karthik">Dr. Karthik – Cardiology</option>
+            <option value="dr-abbrar">Dr. Abbrar – Neurology</option>
+            <option value="dr-ranjith">Dr. Ranjith – Neurology</option>
+            <option value="dr-parvin">Dr. Parvin – Dermatology</option>
+            <option value="dr-divya">Dr. Divya – Dermatology</option>
+            <option value="dr-sandhya">Dr. Sandhya – Pediatrics</option>
+            <option value="dr-vikram">Dr. Vikram – Pediatrics</option>
+            <option value="dr-nandhini">Dr. Nandhini – Orthopedics</option>
+            <option value="dr-sanjay">Dr. Sanjay – Orthopedics</option>
+            <option value="dr-priya">Dr. Priya – OB/GYN</option>
+            <option value="dr-roshini">Dr. Roshini – OB/GYN</option>
+            <option value="dr-aravinth">Dr. Aravinth – General Medicine</option>
+            <option value="dr-siddharth">Dr. Siddharth– General Medicine</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="date">Preferred Date</label>
+          <input type="date" id="date" required>
+        </div>
+
+        <div class="form-group">
+  <label for="time">Preferred Time</label>
+  <select id="time" required>
+    <option value="">-- Select Time --</option>
+    <option value="09:00">09:00 AM</option>
+    <option value="09:30">09:30 AM</option>
+    <option value="10:00">10:00 AM</option>
+    <option value="10:30">10:30 AM</option>
+    <option value="11:00">11:00 AM</option>
+    <option value="11:30">11:30 AM</option>
+    <option value="12:00">12:00 PM</option>
+    <option value="12:30">12:30 PM</option>
+    <option value="13:00">01:00 PM</option>
+    <option value="13:30">01:30 PM</option>
+    <option value="14:00">02:00 PM</option>
+    <option value="14:30">02:30 PM</option>
+    <option value="15:00">03:00 PM</option>
+    <option value="15:30">03:30 PM</option>
+    <option value="16:00">04:00 PM</option>
+    <option value="16:30">04:30 PM</option>
+    <option value="17:00">05:00 PM</option>
+    <option value="17:30">05:30 PM</option>
+    <option value="18:00">06:00 PM</option>
+    <option value="18:30">06:30 PM</option>
+    <option value="19:00">07:00 PM</option>
+    <option value="19:30">07:30 PM</option>
+    <option value="20:00">08:00 PM</option>
+    <option value="20:30">08:30 PM</option>
+  </select>
+</div>
+
+        <div class="form-group">
+          <label for="description">Describe Your Issue</label>
+          <textarea id="description" placeholder="Describe your symptoms or issue here..." required></textarea>
+        </div>
+
+        <a class="back-link" href="patient_dashboard.html">← Back to Dashboard</a>
+
+        <button type="submit">Confirm Appointment</button>
+      </form>
+    </div>
+
+    <!-- Image Section -->
+    <div class="image-section">
+      <img src="patient.jpeg" alt="Appointment Illustration">
+    </div>
+  </div>
+
+</body>
+</html>
+
+<script>
+  document.querySelector("form").addEventListener("submit", function(e) {
+    const timeInput = document.getElementById("time");
+    const timeValue = timeInput.value;
+
+    const [hour, minute] = timeValue.split(":").map(Number);
+    const totalMinutes = hour * 60 + minute;
+
+    if (totalMinutes < 540 || totalMinutes > 1020 || totalMinutes % 5 !== 0) {
+      alert("Please select a time between 09:00 and 17:00 in 5-minute intervals.");
+      e.preventDefault();
+    }
+  });
+</script>

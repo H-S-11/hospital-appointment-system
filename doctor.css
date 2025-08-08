@@ -1,0 +1,285 @@
+/* --- Doctor Dashboard Styling (Previous CSS) --- */
+/* ===== FullCalendar Custom Violet Theme ===== */
+
+/* ===== Global Styling ===== */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f3e5ff; /* Light violet background */
+  color: #333;
+}
+
+header {
+  background-color: #6a0dad;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.main-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  padding: 20px;
+}
+
+/* ===== Queued Appointments ===== */
+.queued-appointments,
+.calendar-section {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #d2b4f0;
+  padding: 20px;
+  width: 90%;
+  max-width: 1000px;
+}
+
+.appointment-card {
+  background-color: #e8d5f7;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 0 5px #bbb;
+}
+
+.actions button {
+  margin: 5px 5px 5px 0;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.approve-btn {
+  background-color: #7d3c98;
+  color: white;
+}
+
+.reschedule-btn {
+  background-color: #a569bd;
+  color: white;
+}
+
+.reject-btn {
+  background-color: #d98880;
+  color: white;
+}
+
+.history-btn {
+  background-color: #bb8fce;
+  color: white;
+}
+
+/* ===== Calendar Table (Old Weekly View) ===== */
+.calendar {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+th,
+td {
+  border: 1px solid #d1b2f0;
+  padding: 10px;
+  text-align: center;
+  vertical-align: top;
+  height: 60px;
+  cursor: pointer;
+}
+
+th {
+  background-color: #d7bde2;
+  color: #4a235a;
+}
+
+td:hover {
+  background-color: #f4e1ff;
+}
+
+.history-entry {
+  background-color: #bb8fce;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 14px;
+  overflow-wrap: break-word;
+}
+
+/* ===== Modal (Reschedule & History) ===== */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(106, 13, 173, 0.3); /* Violet translucent */
+}
+
+.modal-content {
+  margin: auto;
+  padding: 20px;
+  background-color: #fff0ff; /* Light violet */
+  width: 50%;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #6a0dad;
+  position: relative;
+}
+
+.close {
+  float: right;
+  font-size: 25px;
+  font-weight: bold;
+  color: #6a0dad;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background-color: #6a0dad;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.history-content ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+/* ===== FullCalendar Monthly View Styling ===== */
+#calendar {
+  max-width: 1000px;
+  margin: 20px auto;
+  background-color: #f9e9ff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #d2b4f0;
+}
+
+.fc-toolbar-title {
+  font-size: 24px;
+  color: #6a0dad;
+  font-weight: bold;
+}
+
+.fc .fc-button {
+  background-color: #a569bd;
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  margin: 0 3px;
+  border-radius: 5px;
+}
+
+.fc .fc-button:hover {
+  background-color: #884ea0;
+}
+
+.fc .fc-daygrid-day-number {
+  color: #6a0dad;
+  font-weight: bold;
+}
+
+.fc-event {
+  background-color: #bb8fce;
+  border: none;
+  color: white;
+  font-size: 13px;
+  border-radius: 4px;
+  padding: 2px 4px;
+  cursor: pointer;
+}
+
+/* ===== Modal for FullCalendar Note Entry ===== */
+#calendarModal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  padding-top: 100px;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#calendarModal .modal-content {
+  background-color: white;
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 40%;
+  box-shadow: 0 0 15px #6a0dad;
+}
+
+#calendarModal .modal-content h3 {
+  color: #6a0dad;
+  margin-bottom: 15px;
+}
+
+#calendarModal input,
+#calendarModal textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#calendarModal button {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background-color: #6a0dad;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#calendarModal button:hover {
+  background-color: #884ea0;
+}
+
+#calendarModal .close {
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
+  color: #6a0dad;
+  cursor: pointer;
+}
+
+
+
+.add-history-note {
+  margin-top: 15px;
+}
+
+.add-history-note textarea {
+  width: 100%;
+  height: 60px;
+  padding: 8px;
+  margin-bottom: 10px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.add-history-note button {
+  background-color: #7a4fc3;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+}
+
