@@ -1,0 +1,32 @@
+Overview
+
+This is a simple web project for displaying doctor-related content. 
+It includes an HTML page, CSS styling, and a backend server using Node.js.
+
+Project Structure
+
+├── public/               
+│   ├── doctors.jpeg
+│   ├── health.jpeg
+│   ├── patient.jpeg
+│   ├── pdashboard.jpeg
+│   └── doctor.jpeg
+├── css/
+│   └── doctor.css       
+├── html/
+│   ├── doctor.html
+│   ├── book-appointment.html
+│   ├── login.html
+│   ├── signup.html
+│   ├── profile.html
+│   └── patient_dashboard.html
+├── .gitattributes
+├── .gitignore
+└── server.js 
+
+Technologies Used
+
+HTML5
+CSS3
+Node.js
+SQL
